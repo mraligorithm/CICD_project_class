@@ -18,6 +18,17 @@ app:
     - "--master"
     - "--die-on-term"
 
+
+nginx:
+  build: .
+  dockerfile: Dockerfile.nginx 
+  links: 
+    - app
+  ports:
+    - "8000:8000"
+  volumes_from:
+    - webroot
+
 test:
   image: aligorithm/todobackend-specs
   links:
@@ -27,15 +38,6 @@ test:
     JUNIT_REPORT_PATH: /reports/acceptance.xml
     JUNIT_REPORT_STACK: 1
   command: --reporter mocha-jenkins-reporter
-
-nginx:
-  image: nginx 
-  volumes: 
-    - ./todobackend.conf:/etc/nginx/conf.d/todobackend.conf
-  ports:
-    - "8000:8000"
-  volumes_from:
-    - webroot
 
 webroot:
   build: ../../

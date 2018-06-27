@@ -1,3 +1,7 @@
 cicdEnv
 reference
-
+raw
+*.sw?
+.DS_Store
+node_modules
+bower_components
